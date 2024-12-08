@@ -3,7 +3,16 @@
 <head>
     <h1>Welcome to Andrei Dumitru's Physics Notebook!</h1>
     <link rel="stylesheet" href="styles.css" />
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        window.MathJax = {
+        loader: {load: ['[tex]/ams']},
+        tex: {packages: {'[+]': ['ams']}}};
+      
+        window.MathJax = {
+        loader: {load: ['[tex]/physics']},
+        tex: {packages: {'[+]': ['physics']}}
+        };
+    </script>
     <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="oldjournal.html">Old Journal Entries</a></li>
@@ -11,7 +20,27 @@
     </ul>
 </head>
 <body>
-
+<h2>08.12.2024</h2>
+<p2>A few days ago I have been sent the following problem: Show that, \(\forall a\in\mathbb{R} \)
+    $$\int_0^\pi e^{a\cos\theta}\cos(a\sin\theta)d\theta = \pi$$
+    The way I tackled this was by considering the \(\cos(a\sin\theta)\) term to be the real part of \(e^{ia\sin\theta}\), which would turn the integral into
+    $$\int_0^\pi e^{a\cos\theta}\Re\Big(e^{ia\sin\theta}\Big)d\theta $$
+    And, as the \(e^{a\cos\theta}\) term is already real, it can be introduced easily into the real function, giving
+    $$\int_0^\pi \Re\Big(e^{a(\cos\theta+i\sin\theta)}\Big)d\theta$$
+    The integral of the real part of a complex-valued function is just the real part of the integral of the complex-valued function. Thus, we only need to compute the integral and then take its real part. 
+    $$\int_0^\pi e^{a(\cos\theta+i\sin\theta)}d\theta$$
+    Now, we take a change of variables. We use \(z=\cos\theta+i\sin\theta\), and notice that \(dz=(-\sin\theta+i\cos\theta)d\theta=izd\theta\). Before plugging back into the integral, we also define the curve along which we integrate,
+    $$C: \cos\theta+i\sin\theta\, \theta\in[0,\pi]$$
+    So we can write
+    $$\int_C \frac{e^{az}}{iz}dz$$
+    To show that this integral's real part is independent of the value of \(a\), we differentiate with respect to it, and, after differentiating under the integral sign, we take its real part
+    $$\Re\Big(\frac{1}{i}\int_C \frac{\partial}{\partial a}\Big(\frac{e^{az}}{z}\Big) dz\Big)=\Re\Big(\frac{1}{i}\int_C e^{az} dz\Big)$$
+    Since \(z\) goes from \(1\) to \(-1\), the integral above becomes
+    $$\Re\Big(\frac{1}{ai} \big[e^{az}\big]_{1+0i}^{-1+0i}\Big)=\Re\Big(\frac{1}{ai} \big(e^{-a}-e^a\big)\Big)=0$$
+    As there is no real part to that expression. This shows that the real part of our original integral does not change as we change \(a\). So, to calculate the value for any \(a\), we take \(a=0\) for simplicity and get
+    $$\int_0^\pi e^{0}\cos(0)d\theta=\int_0^\pi 1 d\theta=\pi \forall a\in\mathbb{R}$$
+    QED
+</p2>
     
 </body>
 </html>
